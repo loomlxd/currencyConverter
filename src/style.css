@@ -1,0 +1,234 @@
+body {
+  font-family: "Nunito Sans", sans-serif;
+  background-color: rgb(100, 112, 98);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25vh;
+}
+
+.title {
+  font-family: "Limelight", sans-serif;
+  color: white;
+  font-size: 50px;
+  transition: all 0.5s ease;
+}
+
+.title:hover {
+  text-shadow: 0 0 30px rgb(255, 255, 255, 0.4);
+}
+
+.converter {
+  width: 800px;
+  height: 200px;
+  background-color: rgb(144, 167, 145);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3);
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 20px;
+  cursor: pointer;
+}
+
+.left,
+.right {
+  display: flex;
+  position: relative;
+}
+
+.left_input,
+.right_input {
+  font-size: 25px;
+  padding: 15px 15px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.left_input.error,
+.right_input.error {
+  background-color: rgb(230, 159, 159);
+}
+
+.left_input:focus,
+.right_input:focus {
+  border: none;
+  outline: none;
+}
+
+.left_cur,
+.right_cur {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 800;
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  cursor: pointer;
+}
+
+.currency_left_info,
+.currency_right_info {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 40px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  right: 0;
+}
+
+.cur-list-left,
+.cur-list-right {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 25px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0);
+  transition: all 0.5s ease;
+}
+
+.cur-list-left::-webkit-scrollbar-track,
+.cur-list-right::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border-radius: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.cur-list-left::-webkit-scrollbar,
+.cur-list-right::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cur-list-left::-webkit-scrollbar-thumb,
+.cur-list-right::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.cur-list-left.active,
+.cur-list-right.active {
+  animation: curListAnimation 500ms ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes curListAnimation {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.all-currencies-right,
+.all-currencies-left {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.currency-text {
+  padding: 5px 20px;
+}
+
+.currency-text:hover {
+  background-color: rgb(224, 224, 224);
+  border-radius: 20px;
+}
+
+.cur-input {
+  padding: 10px 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3);
+}
+
+.cur-input:focus {
+  outline: none;
+  border: none;
+}
+
+.cur-input.error {
+  background-color: rgb(230, 159, 159);
+}
+
+.left-less,
+.right-less {
+  transform: rotate(0);
+  transition: all 0.3s ease;
+}
+
+.left-less.active,
+.right-less.active {
+  transform: rotate(180deg);
+}
+
+.arrow-left {
+  transform: translateX(0);
+}
+
+.arrow-left.active {
+  animation: leftArrowTranslate 300ms ease;
+}
+
+.arrow-right {
+  transform: translateX(0);
+}
+
+.arrow-right.active {
+  animation: rightArrowTranslate 300ms ease;
+}
+
+@keyframes leftArrowTranslate {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-12px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes rightArrowTranslate {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

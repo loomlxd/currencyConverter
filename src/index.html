@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Limelight&display=swap"
+      rel="stylesheet"
+    />
+    <title>Currency Converter</title>
+  </head>
+  <body>
+    <div class="app">
+      <h1 class="title">Currency converter</h1>
+      <div class="converter">
+        <div class="left">
+          <input type="number" class="left_input" />
+          <div class="left_cur">
+            <div class="left-cur-text">USD</div>
+            <i class="material-icons left-less">expand_more</i>
+          </div>
+          <div class="currency_left_info">
+            <ul class="cur-list-left">
+              <div class="input">
+                <input
+                  type="text"
+                  class="cur-input"
+                  placeholder="currency..."
+                />
+              </div>
+              <ul class="all-currencies-left"></ul>
+            </ul>
+          </div>
+        </div>
+        <div class="center">
+          <i class="material-icons arrow-left">arrow_back</i>
+          <i class="material-icons arrow-right">arrow_forward</i>
+        </div>
+        <div class="right">
+          <input type="number" class="right_input" />
+          <div class="right_cur">
+            <div class="right-cur-text">UAH</div>
+            <i class="material-icons right-less">expand_more</i>
+          </div>
+          <div class="currency_right_info">
+            <ul class="cur-list-right">
+              <div class="input">
+                <input
+                  type="text"
+                  class="cur-input"
+                  placeholder="currency..."
+                />
+              </div>
+              <ul class="all-currencies-right"></ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
