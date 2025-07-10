@@ -26,13 +26,13 @@
       <h1 class="title">Currency converter</h1>
       <div class="converter">
         <div class="left">
-          <input type="number" class="left_input" />
-          <div class="left_cur">
-            <div class="left-cur-text">USD</div>
-            <i class="material-icons left-less">expand_more</i>
+          <input type="number" class="left_input" id="left_input" />
+          <div class="left_cur" id="left_cur">
+            <div class="left-cur-text" id="left-cur-text">USD</div>
+            <i class="material-icons left-less" id="left-less">expand_more</i>
           </div>
           <div class="currency_left_info">
-            <ul class="cur-list-left">
+            <ul class="cur-list-left" id="cur-list-left">
               <div class="input">
                 <input
                   type="text"
@@ -40,30 +40,33 @@
                   placeholder="currency..."
                 />
               </div>
-              <ul class="all-currencies-left"></ul>
+              <ul class="all-currencies-left" id="all-currencies-left"></ul>
             </ul>
           </div>
         </div>
-        <div class="center">
-          <i class="material-icons arrow-left">arrow_back</i>
-          <i class="material-icons arrow-right">arrow_forward</i>
+        <div class="center" id="center">
+          <i class="material-icons arrow-left" id="arrow-left">arrow_back</i>
+          <i class="material-icons arrow-right" id="arrow-right"
+            >arrow_forward</i
+          >
         </div>
         <div class="right">
-          <input type="number" class="right_input" />
-          <div class="right_cur">
-            <div class="right-cur-text">UAH</div>
-            <i class="material-icons right-less">expand_more</i>
+          <input type="number" class="right_input" id="right_input" />
+          <div class="right_cur" id="right_cur">
+            <div class="right-cur-text" id="right-cur-text">UAH</div>
+            <i class="material-icons right-less" id="right-less">expand_more</i>
           </div>
           <div class="currency_right_info">
-            <ul class="cur-list-right">
+            <ul class="cur-list-right" id="cur-list-right">
               <div class="input">
                 <input
                   type="text"
                   class="cur-input"
                   placeholder="currency..."
+                  id="cur-input"
                 />
               </div>
-              <ul class="all-currencies-right"></ul>
+              <ul class="all-currencies-right" id="all-currencies-right"></ul>
             </ul>
           </div>
         </div>

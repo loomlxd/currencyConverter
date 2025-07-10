@@ -1,21 +1,27 @@
-const BASE_URL = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api`;
+const BASE_URL = process.env.API_KEY;
 
-export default class Fetch {
-  constructor() {}
+export default class HttpClient {
+  async getCurrency(cur) {
+    try {
+      const response = await fetch(
+        `${BASE_URL}@latest/v1/currencies/${cur}.json`
+      );
+      const data = await response.json();
 
-  async takeCurrency(cur) {
-    const response = await fetch(
-      `${BASE_URL}@latest/v1/currencies/${cur}.json`
-    );
-    const data = await response.json();
-
-    return data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async takeAllCurrencies() {
-    const responce = await fetch(`${BASE_URL}@latest/v1/currencies.json`);
-    const data = await responce.json();
+  async getAllCurrencies() {
+    try {
+      const response = await fetch(`${BASE_URL}@latest/v1/currencies.json`);
+      const data = await response.json();
 
-    return data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
