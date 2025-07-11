@@ -10,7 +10,7 @@ export default class HttpClient {
 
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -21,7 +21,7 @@ export default class HttpClient {
 
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

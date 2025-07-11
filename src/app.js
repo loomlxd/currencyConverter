@@ -88,7 +88,7 @@ function onCenterArrowsClick(e) {
 
 refs.currencyLeftInfo.addEventListener("click", onCurrencyLeftInfoClick);
 
-function onCurrencyLeftInfoClick(e) {
+function onCurrencyLeftInfoClick() {
   refs.arrowLeft.classList.toggle("active");
   showCur({
     allCurrencies: refs.allCurrenciesLeft,
@@ -100,8 +100,8 @@ function createHtmlCur(keys, ref) {
   const htmlText = keys
     .filter(
       (cur) =>
-        cur !== refs.leftCurText.textContent.toLowerCase() ||
-        cur !== refs.rightCurText.textContent.toLowerCase()
+        cur !== refs.leftCurrency.textContent.toLowerCase() ||
+        cur !== refs.rightCurrency.textContent.toLowerCase()
     )
     .map((curr) => `<li class="currency-text">${curr.toUpperCase()}</li>`)
     .join("");
@@ -111,7 +111,7 @@ function createHtmlCur(keys, ref) {
 
 refs.currencyListLeft.addEventListener("click", (e) => {
   onCurrencyListClick(e, {
-    curText: refs.leftCurText,
+    curText: refs.leftCurrency,
     currencyList: refs.currencyListLeft,
     input: refs.leftInput,
     arrow: refs.arrowLeft,
@@ -162,7 +162,7 @@ async function showCur(paramRefs) {
 
 refs.currencyListRight.addEventListener("click", (e) => {
   onCurrencyListClick(e, {
-    curText: refs.rightCurText,
+    curText: refs.rightCurrency,
     currencyList: refs.currencyListRight,
     input: refs.rightInput,
     arrow: refs.arrowRight,
