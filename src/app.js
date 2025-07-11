@@ -2,13 +2,13 @@ import "./style.css";
 import debounce from "debounce";
 import throttle from "lodash.throttle";
 import refs from "./refs";
-import Fetch from "./fetch";
+import HttpClient from "./fetch";
 
-const fetch = new Fetch();
+const httpClient = new HttpClient();
 
-refs.leftInput.addEventListener("input", debounce(onleftInputChange, 300));
+refs.leftInput.addEventListener("input", debounce(onLeftInputChange, 300));
 
-function onleftInputChange(e) {
+function onLeftInputChange(e) {
   const value = e.target.value;
   currencyForLeft(value);
 }
@@ -20,7 +20,7 @@ async function currencyForLeft(value) {
   }
   refs.leftInput.classList.remove("error");
 
-  const data = await fetch.takeCurrency(
+  const data = await httpClient.getCurrency(
     refs.leftCurrency.textContent.toLowerCase()
   );
   const actualCur = refs.leftCurrency.textContent.toLowerCase();
@@ -47,7 +47,7 @@ async function currencyForRight(value) {
   }
   refs.rightInput.classList.remove("error");
 
-  const data = await fetch.takeCurrency(
+  const data = await httpClient.getCurrency(
     refs.rightCurrency.textContent.toLowerCase()
   );
   const actualCur = refs.rightCurrency.textContent.toLowerCase();
@@ -88,26 +88,20 @@ function onCenterArrowsClick(e) {
 
 refs.currencyLeftInfo.addEventListener("click", onCurrencyLeftInfoClick);
 
-function onCurrencyLeftInfoClick(e) {
+function onCurrencyLeftInfoClick() {
   refs.arrowLeft.classList.toggle("active");
-  showCurLeft();
-}
-
-async function showCurLeft() {
-  const data = await fetch.takeAllCurrencies();
-  const keys = Object.keys(data);
-
-  createHtmlCur(keys, refs.allCurrenciesLeft);
-
-  refs.currencyListLeft.classList.toggle("active");
+  showCur({
+    allCurrencies: refs.allCurrenciesLeft,
+    currencyList: refs.currencyListLeft,
+  });
 }
 
 function createHtmlCur(keys, ref) {
   const htmlText = keys
     .filter(
       (cur) =>
-        cur !== refs.leftCurText.textContent.toLowerCase() ||
-        cur !== refs.rightCurText.textContent.toLowerCase()
+        cur !== refs.leftCurrency.textContent.toLowerCase() ||
+        cur !== refs.rightCurrency.textContent.toLowerCase()
     )
     .map((curr) => `<li class="currency-text">${curr.toUpperCase()}</li>`)
     .join("");
@@ -115,20 +109,35 @@ function createHtmlCur(keys, ref) {
   ref.innerHTML = htmlText;
 }
 
-refs.currencyListLeft.addEventListener("click", onCurrencyListLeftClick);
+refs.currencyListLeft.addEventListener("click", (e) => {
+  onCurrencyListClick(e, {
+    curText: refs.leftCurrency,
+    currencyList: refs.currencyListLeft,
+    input: refs.leftInput,
+    arrow: refs.arrowLeft,
+    currencyFor: currencyForLeft,
+    allCurrencies: refs.allCurrenciesLeft,
+  });
+});
 
-function onCurrencyListLeftClick(e) {
+function onCurrencyListClick(e, paramRefs) {
   if (e.target.tagName === "LI") {
     const cur = e.target.textContent;
-    refs.leftCurText.textContent = cur;
-    refs.currencyListLeft.classList.remove("active");
-    const value = refs.leftInput.value;
-    currencyForLeft(value);
-    refs.arrowLeft.classList.remove("active");
+    paramRefs.curText.textContent = cur;
+    paramRefs.currencyList.classList.remove("active");
+
+    const value = paramRefs.input.value;
+    paramRefs.currencyFor(value);
+    paramRefs.arrow.classList.remove("active");
     refs.currencyInput[0].value = "";
   }
   if (e.target.tagName === "INPUT") {
-    e.target.addEventListener("input", throttle(onFindCurrencyInputLeft, 300));
+    e.target.addEventListener(
+      "input",
+      throttle(() => {
+        currencySearch(e, paramRefs.allCurrencies);
+      }, 300)
+    );
   }
 }
 
@@ -136,39 +145,35 @@ refs.currencyRightInfo.addEventListener("click", onCurrencyRightInfoClick);
 
 function onCurrencyRightInfoClick(e) {
   refs.arrowRight.classList.toggle("active");
-  showCurRight();
+  showCur({
+    allCurrencies: refs.allCurrenciesRight,
+    currencyList: refs.currencyListRight,
+  });
 }
 
-async function showCurRight() {
-  const data = await fetch.takeAllCurrencies();
+async function showCur(paramRefs) {
+  const data = await httpClient.getAllCurrencies();
   const keys = Object.keys(data);
 
-  createHtmlCur(keys, refs.allCurrenciesRight);
+  createHtmlCur(keys, paramRefs.allCurrencies);
 
-  refs.currencyListRight.classList.toggle("active");
+  paramRefs.currencyList.classList.toggle("active");
 }
 
-refs.currencyListRight.addEventListener("click", onCurrencyListRightClick);
+refs.currencyListRight.addEventListener("click", (e) => {
+  onCurrencyListClick(e, {
+    curText: refs.rightCurrency,
+    currencyList: refs.currencyListRight,
+    input: refs.rightInput,
+    arrow: refs.arrowRight,
+    currencyFor: currencyForRight,
+    allCurrencies: refs.allCurrenciesRight,
+  });
+});
 
-function onCurrencyListRightClick(e) {
-  if (e.target.tagName === "LI") {
-    const cur = e.target.textContent;
-    refs.rightCurText.textContent = cur;
-    refs.currencyListRight.classList.remove("active");
-
-    const value = refs.leftInput.value;
-    currencyForLeft(value);
-    refs.arrowRight.classList.remove("active");
-    refs.currencyInput[1].value = "";
-  }
-  if (e.target.tagName === "INPUT") {
-    e.target.addEventListener("input", throttle(onFindCurrencyInputRight, 300));
-  }
-}
-
-async function onFindCurrencyInputLeft(e) {
+async function currencySearch(e, ref) {
   e.target.classList.remove("error");
-  const allCurrencies = await fetch.takeAllCurrencies();
+  const allCurrencies = await httpClient.getAllCurrencies();
   const keysCur = Object.keys(allCurrencies);
   const filtered = keysCur.filter((cur) =>
     cur.includes(e.target.value.toLowerCase())
@@ -179,23 +184,7 @@ async function onFindCurrencyInputLeft(e) {
     return;
   }
 
-  createHtmlCur(filtered, refs.allCurrenciesLeft);
-}
-
-async function onFindCurrencyInputRight(e) {
-  e.target.classList.remove("error");
-  const allCurrencies = await fetch.takeAllCurrencies();
-  const keysCur = Object.keys(allCurrencies);
-  const filtered = keysCur.filter((cur) =>
-    cur.includes(e.target.value.toLowerCase())
-  );
-
-  if (filtered.length === 0) {
-    e.target.classList.add("error");
-    return;
-  }
-
-  createHtmlCur(filtered, refs.allCurrenciesRight);
+  createHtmlCur(filtered, ref);
 }
 
 window.addEventListener("click", onWindowClick);
