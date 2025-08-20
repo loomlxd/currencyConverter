@@ -251,6 +251,7 @@ input[type="number"]::-webkit-inner-spin-button {
     display: flex;
     flex-direction: column;
     gap: 5vh;
+    margin-top: 0;
   }
 
   .title {
